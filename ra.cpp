@@ -1,4 +1,20 @@
 
+/*
+ * ra.cpp: Trabajo final del curso de posgrado RA y RV
+ * Docente: Carina Fracchia
+ *
+ * Dependencias: build_essential, opencv, opengl
+ * Autor: chat.deepseek y gpt hicieron gran parte. Funciones específicas
+ *        donde yo le indiqué la API y qué lograr.
+ *
+ *        Rafael Zurita:
+ *        La integración de todas las partes y versión con
+ *        camara, smartphone reportando acelerometro por UDP, 
+ *        visión y calculos de realidad aumentada.
+ *
+ *        Prototipo cero (fulero, fiero, sólo para mostrar la funcionalidad).
+ */
+
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <cmath>
@@ -39,6 +55,7 @@ CascadeClassifier face_cascade;
 
 CascadeClassifier eye_cascade;
 
+/* Globales utilizadas para mantener el estado actual de todo el código */
 
 float total_rostros_width[10];
 float total_x[3];
@@ -49,7 +66,6 @@ float tamanio_rostro = 160;
 int x_rostro = 160;
 int y_rostro = 160;
 int figura = 0; // 0 = ninguna, 1 = cubo, 2 = esfera, etc.
-
 
 const int WIDTH = 800, HEIGHT = 600;
 GLuint cameraTex;
@@ -94,8 +110,11 @@ bool initCamera() {
 
 int cada_cuanto = 0;
 void updateCamera() {
-    if(!cap.read(frame)) return;
-        // Detectar rostros en el frame actual
+
+    if(!cap.read(frame)) 
+	    return;
+
+    // Detectar rostros en el frame actual
     cada_cuanto++;
     if (cada_cuanto ==1) {
          detectarRostros(frame);
@@ -199,15 +218,10 @@ std::tuple<double, double, double> parsear_y_calcular_angles(const std::string& 
     }
 }
 
-
-
-
-
 // Convertir radianes a grados
 float radianesAGrados(float radianes) {
     return radianes * (180.0 / M_PI);
 }
-
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -234,10 +248,6 @@ void display() {
     }
      // FIN DESDE EL SOCKET
 
-
-
-
-
     updateCamera();
     drawBackground();
 
@@ -251,27 +261,23 @@ void display() {
     gluLookAt(0,0,5, 0,0,0, 0,1,0);
 
     // Dentro de display(), antes de drawCube()
-glPushMatrix();
+    glPushMatrix();
 
 
-float posX = (x_rostro * 4.0 / 800.0)-2;
-//float posX = 1.0f;  // Cambia estos valores
-float posY = (y_rostro + tamanio_rostro*4)*(-3.0)/600.0 + 1.5;
-std::cout << " y = " << y_rostro << " tam " << tamanio_rostro << " calc " << (y_rostro + tamanio_rostro*2.0) << "  en f " <<   ((y_rostro + tamanio_rostro)*3.0/600.0 - 1.5)  <<  "  " <<  (y_rostro + tamanio_rostro*4)*(-3.0)/600.0 - 1.5 << endl;
-//float posY = -1.5f;
-float posZ = 1.0f;
-glTranslatef(posX, posY, posZ);  // <-- Esta es la línea clave
+    float posX = (x_rostro * 4.0 / 800.0)-2;
+    float posY = (y_rostro + tamanio_rostro*4)*(-3.0)/600.0 + 1.5;
+    std::cout << " y = " << y_rostro << " tam " << tamanio_rostro << " calc " << (y_rostro + tamanio_rostro*2.0) << "  en f " <<   ((y_rostro + tamanio_rostro)*3.0/600.0 - 1.5)  <<  "  " <<  (y_rostro + tamanio_rostro*4)*(-3.0)/600.0 - 1.5 << endl;
+    float posZ = 1.0f;
+    glTranslatef(posX, posY, posZ);  // <-- Esta es la línea clave
 
-angX = radianesAGrados(roll);
-angY = radianesAGrados(pitch);
-glRotatef((-1)*angX,1,0,0);
-glRotatef((-1)*angY,0,1,0);
+    angX = radianesAGrados(roll);
+    angY = radianesAGrados(pitch);
+    glRotatef((-1)*angX,1,0,0);
+    glRotatef((-1)*angY,0,1,0);
 
-float tamanio = tamanio_rostro / 300.0;
-std::cout << " TAMANIO ROSTRO DIVIDIO " << tamanio << endl;
+    float tamanio = tamanio_rostro / 300.0;
+    std::cout << " TAMANIO ROSTRO DIVIDIO " << tamanio << endl;
 
-//drawCube(tamanio);
- // Dibujamos la figura según el nombre
     if (figura == 0) 
         dibujar_cubo(tamanio);
     else if (figura == 1) 
@@ -285,8 +291,7 @@ std::cout << " TAMANIO ROSTRO DIVIDIO " << tamanio << endl;
     else if (figura == 5) 
         dibujar_taza(tamanio, tamanio*2, 20, 10);
 
-glPopMatrix();
-
+    glPopMatrix();
     glutSwapBuffers();
 }
 
@@ -300,10 +305,6 @@ void animate(int value) {
 
 int main(int argc, char** argv) {
 
-    // Valores por defecto
-    // int camara = 0;
-
-    // Verificar número de argumentos
     if (argc < 3) {
         std::cout << "Uso: " << argv[0] << " <numero_camara> <figura>" << std::endl;
         std::cout << "Ejemplo: " << argv[0] << " 1 cilindro" << std::endl;
@@ -311,7 +312,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Procesar argumento de cámara
     try {
         camara = std::stoi(argv[1]);
         if (camara < 0 || camara > 2) {
@@ -323,7 +323,6 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Procesar argumento de figura
     if (strcmp(argv[2], "cubo") == 0) {
         figura = 0;
     } else if (strcmp(argv[2], "esfera") == 0) {
@@ -341,38 +340,28 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Mostrar los valores seleccionados
     std::cout << "Configuración seleccionada:" << std::endl;
     std::cout << "Cámara: " << camara << std::endl;
     std::cout << "Figura: " << argv[2] << " (código: " << figura << ")" << std::endl;
 
+    eye_cascade.load("haarcascade_eye.xml");
 
 
-
-
-	eye_cascade.load("haarcascade_eye.xml");
-
-
-  // Verificar si se puede cargar el clasificador
     if (!face_cascade.load(rostros_cascade)) {
         cerr << "Error al cargar el clasificador de rostros" << endl;
         return -1;
     }	
-	// SOCKET
-    // Crear socket UDP
+
+    // SOCKET
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("Error al crear socket");
         return EXIT_FAILURE;
     }
 
-    // Configurar dirección del servidor
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = INADDR_ANY;  // Escuchar en todas las interfaces
     servaddr.sin_port = htons(5005);        // Puerto 5005
-
-
-
 
     // Bind
     if (bind(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
@@ -408,10 +397,7 @@ int main(int argc, char** argv) {
 
     if(cap.isOpened()) cap.release();
 
-    // CERRAR SOCKET
     close(sockfd);
-
-
     return 0;
 }
 
@@ -424,65 +410,49 @@ int umbral_rostros = 0;
 
 void detectarRostros(Mat &frame) {
 
-    Mat frame_gris;
-    vector<Rect> rostros;
+	Mat frame_gris;
+	vector<Rect> rostros;
 
-    // Convertir a escala de grises (la detección funciona mejor en gris)
-    cvtColor(frame, frame_gris, COLOR_BGR2GRAY);
-    // Ecualizar el histograma para mejorar el contraste
-    equalizeHist(frame_gris, frame_gris);
+	cvtColor(frame, frame_gris, COLOR_BGR2GRAY);
+	equalizeHist(frame_gris, frame_gris);
 
-    if (face_cascade.empty()) {
-    cerr << "ERROR: ¡El clasificador no se cargó!" << endl;
-    return;
-}
+	if (face_cascade.empty()) {
+		cerr << "ERROR: ¡El clasificador no se cargó!" << endl;
+		return;
+	}
 
-    // Detectar rostros
-    face_cascade.detectMultiScale(
-        frame_gris, rostros,
-        1.3, 3, 0|CASCADE_SCALE_IMAGE,
-        Size(50, 50)
-    );
+	// Detectar rostros
+	face_cascade.detectMultiScale(
+		frame_gris, rostros,
+		1.3, 3, 0|CASCADE_SCALE_IMAGE,
+		Size(50, 50)
+	);
 	/*
-	 1.1 - Factor de escala (valores típicos: 1.01 a 1.3). Valores más altos = menos detecciones pero más rápido.
-
-3 - minNeighbors (valores típicos: 3 a 6). Filtra falsos positivos. Mayor valor = más estricto.
-
-0|CASCADE_SCALE_IMAGE - Flags (combinables con OR):
-
-CASCADE_SCALE_IMAGE (recomendado)
-
-CASCADE_FIND_BIGGEST_OBJECT (solo el más grande)
-
-Size(30, 30) - Tamaño mínimo del objeto a detectar (ajustar según distancia a la cámar
-*/
+		1.1 - Factor de escala (valores típicos: 1.01 a 1.3). Valores más altos = menos detecciones pero más rápido.
+		3 - minNeighbors (valores típicos: 3 a 6). Filtra falsos positivos. Mayor valor = más estricto.
+		0|CASCADE_SCALE_IMAGE - Flags (combinables con OR):
+		CASCADE_SCALE_IMAGE (recomendado)
+		CASCADE_FIND_BIGGEST_OBJECT (solo el más grande)
+		Size(30, 30) - Tamaño mínimo del objeto a detectar (ajustar según distancia a la cámar
+	*/
  
 	for (size_t i = 0; i < rostros.size(); i++) {
-    float aspect_ratio = (float)rostros[i].width / rostros[i].height;
-    if (aspect_ratio < 0.7 || aspect_ratio > 1.5) {
-        rostros.erase(rostros.begin() + i);
-        i--;  // Ajustar índice después de borrar
-    }
-}
+		float aspect_ratio = (float)rostros[i].width / rostros[i].height;
+		if (aspect_ratio < 0.7 || aspect_ratio > 1.5) {
+			rostros.erase(rostros.begin() + i);
+		        i--;  // Ajustar índice después de borrar
+		}
+	}
 	int n = 0; // para buscar el mayor
 	float n_width = 0;
-    // Dibujar elipses alrededor de los rostros
-    for (size_t i = 0; i < rostros.size(); i++) {
+	for (size_t i = 0; i < rostros.size(); i++) {
 	    if (rostros[i].width > n_width)
 		    n = i;
+	}
 
-
-//	    std::cout << " TAMAÑO " << rostros[i].width << endl;
- //       Point centro(rostros[i].x + rostros[i].width/2, rostros[i].y + rostros[i].height/2);
-  //      ellipse(
-   //         frame, centro,
-    //        Size(rostros[i].width/2, rostros[i].height/2),
-     //       0, 0, 360,
-      //      Scalar(255, 0, 255), 4
-       // );
-    }
 	if (rostros.size() == 0)
 		return;
+
 	total_rostros_width[total_rostros_n] = rostros[n].width;
 	x_rostro = rostros[n].x + rostros[n].width/2;
 	y_rostro = rostros[n].y + rostros[n].height/2;
@@ -506,6 +476,4 @@ Size(30, 30) - Tamaño mínimo del objeto a detectar (ajustar según distancia a
 		sum_y += total_y[i];
 	}
 	tamanio_rostro = total / 10;
-	//x_rostro = sum_x / 3;
-	//y_rostro = sum_y / 3;
 }
