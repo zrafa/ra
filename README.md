@@ -39,7 +39,7 @@ del lugar exacto donde presentar la figura 3d.
 
 #### Potura
 
-El smartphone envía por UDP en tiempo real los datos crudos de sus acelerómetro.
+El smartphone envía por UDP en tiempo real los datos crudos de sus acelerómetros.
 Con estos datos la aplicación (en la laptop o PC) calcula la postura (actitud) 
 del smartphone, que luego se utiliza para rotar la figura 3D a la postura equivalente del móvil.
 
@@ -100,5 +100,49 @@ teléfono con respecto a la gravedad. Si gz ≈ -1, la pantalla está hacia arri
 No podemos conocer la orientación cartesiana con sólo dos acelerómetros. 
 Se deja como trabajo futuro dos ideas de como se puede lograr si se extiende
 este prototipo.
+
+
+### Como agregar nuevas figuras 3D al proyecto
+
+Para que el sistema reconozca nuevas figuras 3D se debe hacer lo siguiente:
+
+Modificar ```figuras.cpp``` y ```figuras.h``` agregando una nueva función
+dibujar_NOMBRE_DE_SU_FIGURA(argumentos). Entre sus argumentos debería
+existir uno que sea size, para que su nueva función dibuje la figura
+con el tamaño apropiado. Observe ejemplos en esos archivos para saber
+como agregar.
+
+Luego modifique ra.cpp. Simplemente agregue en main() el reconocimiento
+del argumento en linea de comandos del nombre de la figura. Y luego,
+en la función display() debe agregar el llamado a la nueva función 
+agregada en figuras.cpp.
+
+### Trabajo a futuro
+
+Hay varias cuestiones que se pueden mejorar:
+
+Una linda idea que no se logra completar aún es la de mostrar figuras 3D
+de objetos reales, creadas con blender o alguna herramienta de creacion de 
+figuras con texturas.
+
+Otra mejora sustancial sería la de calcular yawn además de roll y pitch.
+Eso puede lograrse si el celular posee giróscopo o magnetómetro.
+Si posee magnetómetro probablemente se lo deba calibrar primero.
+Si presenta giróscopo, una posibilidad es que el usuario siempre inicie
+la aplicación mirando de frente a la cámara (con el celular orientado a la
+cámara). Esa sería el yawn inicial. Luego, si la profesora gira el celular
+hacia un eje cardinal, el giróscopo reportará la velocidad angular durante
+el lapso que demoró la profesora en girar el celular, con lo cual, se puede
+calcular la nueva orientación. Esta idea funcionará durante unos instantes,
+y luego la deriva en la integración se hara muy evidente y la orientación
+no reflejará fielmente, la orientación real del celular. En ese momento, habría
+que resetear la orientación, con alguna opción en pantalla del celular
+o algo similar.
+Una tercera idea para la orientación es que el celular envíe la imagen 
+de la cámara frontal (o la posterior). Luego, la aplicación, a medida
+que recibe frames de esa cámara, puede ir calculando la rotación del techo
+o del suelo (dependiendo de qué camara). Pero esa orientación calculada
+unicamente será posible si el celular está paralelo al piso. Si es rotado
+se pierde la referencia con la cual se calculaba el giro.
 
 
