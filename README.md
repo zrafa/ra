@@ -27,9 +27,8 @@ del lugar exacto donde presentar la figura 3d.
 #### Potura
 
 El smartphone envía por UDP en tiempo real los datos crudos de sus acelerómetro.
-Con estos datos la aplicación calcula la postura (actitud) del smartphone,
-que luego se utiliza para rotar la figura 3D a la postura equivalente
-del móvil.
+Con estos datos la aplicación (en la laptop o PC) calcula la postura (actitud) 
+del smartphone, que luego se utiliza para rotar la figura 3D a la postura equivalente del móvil.
 
 #### Distancia y ubicación
 
@@ -38,7 +37,27 @@ de la profesora (o profesor). En base a este cálculo, se puede estimar
 a qué distancia está la persona de la cámara, y además, lograr identificar
 la ubicación de la cintura del profesor en la escena.
 
-### En profundidad ...
+Con el tamaño del rostro el sistema calcula también el tamaño ideal para
+la figura 3D, por lo que si el profesor se acerca o aleja de la cámara
+la figura dibujada tendrá un tamaño proporcional, continuando con una
+visión de realidad aumentada acorde.
+
+#### Video proyectado
+
+Con la información calculada: postura, tamaño del rostro de la profesora,
+distancia de la profesora a la cámara, tamaño ideal para el objeto 3D,
+ubicación de la profesora en la escena, ubicación calculada para el objeto 
+3D, la aplicación realiza lo siguiente:
+
+1. toma la foto que provino de la cámara,
+2. dibuja la figura 3D seleccionada por el usuario utilizando opengl
+3. Rota la figura 3D para que coincida con la postura del smartphone
+4. Traslada la figura 3D a al ubicación de la cintura de la profesora
+5. Muestra en pantalla la imagen final 
+6. Se repite desde el paso 1. para lograr el video en tiempo real de la
+realidad aumentada.
+
+#### En profundidad algunos aspectos...
 
 Describimos ahora la ténica para obtener la actitud del smarthone:
 
