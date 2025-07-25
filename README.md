@@ -41,19 +41,26 @@ Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleraci
 
 El acelerómetro entrega un vector:
 
-a = [ax, ay, az]
+![a = [ax, ay, az]](https://latex.codecogs.com/png.image?\dpi{120} \vec{a} = [a_x, a_y, a_z])
 
 Primero se normaliza:
 
-norm = sqrt(ax^2 + ay^2 + az^2)
+![norma a](https://latex.codecogs.com/png.image?\dpi{120} \|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2})
+
 gx = ax / norm
 gy = ay / norm
 gz = az / norm
 
-Los ángulos se calculan así:
+Entonces se calcula el roll y pitch de la postura del móvil: 
 
-roll = atan2(gy, gz)
-pitch = atan2(-gx, sqrt(gy^2 + gz^2))
+![roll](https://latex.codecogs.com/png.image?\dpi{120} roll = \arctan2(g_y, g_z))
+![pitch](https://latex.codecogs.com/png.image?\dpi{120} pitch = \arctan2(-g_x, \sqrt{g_y^2 + g_z^2}))
 
-Estos ángulos indican cómo se orienta el móvil respecto a la gravedad. Por ejemplo, si gz ≈ -1, la pantalla está hacia arriba; si gy ≈ 1, el móvil está de canto. Solo con este sensor, podemos conocer cómo de inclinado está el dispositivo, pero no su orientación norte-sur.
+Con estos ángulos el sistema ya puede rotar la figura 3D para que coincida
+con la postura del móvil. Veamos un ejemplo de de la orientación del
+teléfono con respecto a la gravedad. Si gz ≈ -1, la pantalla está hacia arriba; si gy ≈ 1, el móvil está de costado. 
+No podemos conocer la orientación cartesiana con sólo dos acelerómetros. 
+Se deja como trabajo futuro dos ideas de como se puede lograr si se extiende
+este prototipo.
+
 
