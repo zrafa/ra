@@ -18,6 +18,9 @@ de explicar diferentes conceptos geométricos relacionadas con la misma.
 La figura geométrica se desplaza junto a la profesora, para mantener
 la realidad aumentada.
 
+El sistema actualmente puede mostrar las siguientes figuras:
+cubo, esfera, cono, cilindro, toroide, taza (esta última aún no sale :)
+
 ## Cómo utilizar
 
 0. Instalar en la laptop o PC opengl, opencv, y un compilador de c++
