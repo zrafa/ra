@@ -106,16 +106,16 @@ este prototipo.
 
 Para que el sistema reconozca nuevas figuras 3D se debe hacer lo siguiente:
 
-Modificar ```figuras.cpp``` y ```figuras.h``` agregando una nueva función
-dibujar_NOMBRE_DE_SU_FIGURA(argumentos). Entre sus argumentos debería
+Modificar ```figuras.cpp``` y ```figuras.h``` agregando una nueva función ```
+dibujar_NOMBRE_DE_SU_FIGURA(argumentos)```. Entre sus argumentos debería
 existir uno que sea size, para que su nueva función dibuje la figura
 con el tamaño apropiado. Observe ejemplos en esos archivos para saber
 como agregar.
 
-Luego modifique ra.cpp. Simplemente agregue en main() el reconocimiento
+Luego modifique ```ra.cpp```. Simplemente agregue en ```main()``` el reconocimiento
 del argumento en linea de comandos del nombre de la figura. Y luego,
-en la función display() debe agregar el llamado a la nueva función 
-agregada en figuras.cpp.
+en la función ```display()``` debe agregar el llamado a la nueva función 
+agregada en ```figuras.cpp```.
 
 ### Trabajo a futuro
 
