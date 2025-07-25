@@ -19,21 +19,26 @@ La figura geométrica se desplaza junto a la profesora, para mantener
 la realidad aumentada.
 
 
-Técnica
--------
+## Técnica
 
 Se utilizan diferentes técnicas para obtener la actitud y posición 
 del lugar exacto donde presentar la figura 3d.
+
+#### Potura
 
 El smartphone envía por UDP en tiempo real los datos crudos de sus acelerómetro.
 Con estos datos la aplicación calcula la postura (actitud) del smartphone,
 que luego se utiliza para rotar la figura 3D a la postura equivalente
 del móvil.
 
+#### Distancia y ubicación
+
 Se utiliza detección de rostros para identificar el ancho del rostro
 de la profesora (o profesor). En base a este cálculo, se puede estimar
 a qué distancia está la persona de la cámara, y además, lograr identificar
 la ubicación de la cintura del profesor en la escena.
+
+### En profundidad ...
 
 Describimos ahora la ténica para obtener la actitud del smarthone:
 
