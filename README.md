@@ -39,7 +39,7 @@ Describimos ahora la ténica para obtener la actitud del smarthone:
 
 Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleración debida a la gravedad. Esta tiene una magnitud de unos 9.81 m/s² y su dirección indica hacia dónde está el "suelo" en el sistema de coordenadas del dispositivo. A partir de ese vector, se puede estimar la actitud (orientación) en términos de inclinación: pitch (inclinación frontal) y roll (lateral). El yaw (rotación sobre el eje vertical) no puede determinarse con el acelerómetro solo.
 
-El acelerómetro entrega un vector:
+EL smartphone envía los datos del acelerómetro como un vector:
 
 ![a = [ax, ay, az]](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5Cvec%7Ba%7D%20%3D%20%5Ba_x%2C%20a_y%2C%20a_z%5D)
 
@@ -47,9 +47,9 @@ Primero se normaliza:
 
 ![norma de a](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5C%7C%5Cvec%7Ba%7D%5C%7C%20%3D%20%5Csqrt%7Ba_x%5E2%20%2B%20a_y%5E2%20%2B%20a_z%5E2%7D)
 
-gx = ax / norm
-gy = ay / norm
-gz = az / norm
+![gx](https://latex.codecogs.com/png.image?\dpi{120}g_x%20%3D%20\frac{a_x}{\|\vec{a}\|})
+![gy](https://latex.codecogs.com/png.image?\dpi{120}g_y%20%3D%20\frac{a_y}{\|\vec{a}\|})
+![gz](https://latex.codecogs.com/png.image?\dpi{120}g_z%20%3D%20\frac{a_z}{\|\vec{a}\|})
 
 Entonces se calcula el roll y pitch de la postura del móvil: 
 
