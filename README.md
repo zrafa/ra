@@ -41,6 +41,8 @@ Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleraci
 
 El acelerómetro entrega un vector:
 
+![g = a / |a|](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5Cvec%7Bg%7D%20%3D%20%5Cfrac%7B%5Cvec%7Ba%7D%7D%7B%5C%7Ca%5C%7C%7D)
+
 ![a = [ax, ay, az]](https://latex.codecogs.com/png.image?\dpi{120} \vec{a} = [a_x, a_y, a_z])
 
 Primero se normaliza:
