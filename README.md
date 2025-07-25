@@ -41,13 +41,11 @@ Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleraci
 
 El acelerómetro entrega un vector:
 
-![g = a / |a|](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5Cvec%7Bg%7D%20%3D%20%5Cfrac%7B%5Cvec%7Ba%7D%7D%7B%5C%7Ca%5C%7C%7D)
-
-![a = [ax, ay, az]](https://latex.codecogs.com/png.image?\dpi{120} \vec{a} = [a_x, a_y, a_z])
+![a = [ax, ay, az]](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5Cvec%7Ba%7D%20%3D%20%5Ba_x%2C%20a_y%2C%20a_z%5D)
 
 Primero se normaliza:
 
-![norma a](https://latex.codecogs.com/png.image?\dpi{120} \|\vec{a}\| = \sqrt{a_x^2 + a_y^2 + a_z^2})
+![norma de a](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20%5C%7C%5Cvec%7Ba%7D%5C%7C%20%3D%20%5Csqrt%7Ba_x%5E2%20%2B%20a_y%5E2%20%2B%20a_z%5E2%7D)
 
 gx = ax / norm
 gy = ay / norm
@@ -55,8 +53,9 @@ gz = az / norm
 
 Entonces se calcula el roll y pitch de la postura del móvil: 
 
-![roll](https://latex.codecogs.com/png.image?\dpi{120} roll = \arctan2(g_y, g_z))
-![pitch](https://latex.codecogs.com/png.image?\dpi{120} pitch = \arctan2(-g_x, \sqrt{g_y^2 + g_z^2}))
+![roll](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20roll%20%3D%20%5Carctan2%28g_y%2C%20g_z%29)
+
+![pitch](https://latex.codecogs.com/png.image?\dpi%7B120%7D%20pitch%20%3D%20%5Carctan2%28-g_x%2C%20%5Csqrt%7Bg_y%5E2%20%2B%20g_z%5E2%7D%29)
 
 Con estos ángulos el sistema ya puede rotar la figura 3D para que coincida
 con la postura del móvil. Veamos un ejemplo de de la orientación del
