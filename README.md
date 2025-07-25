@@ -18,6 +18,19 @@ de explicar diferentes conceptos geométricos relacionadas con la misma.
 La figura geométrica se desplaza junto a la profesora, para mantener
 la realidad aumentada.
 
+## Cómo utilizar
+
+0. Instalar en la laptop o PC opengl, opencv, y un compilador de c++
+1. Instalar en el celular la aplicación sensagram https://github.com/umer0586/SensaGram
+2. Configurar sensagram: seleccionar como sensor acelerometro. y Colocar la IP de la laptop o PC
+3. Compilar y ejecutar la aplicación:
+
+```
+git clone http://github.com/zrafa/ra
+cd ra
+./compilar.sh
+./figuras_camara 2 toroide
+```
 
 ## Técnica
 
@@ -61,7 +74,7 @@ realidad aumentada.
 
 Describimos ahora la ténica para obtener la actitud del smarthone:
 
-Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleración debida a la gravedad. Esta tiene una magnitud de unos 9.81 m/s² y su dirección indica hacia dónde está el "suelo" en el sistema de coordenadas del dispositivo. A partir de ese vector, se puede estimar la actitud (orientación) en términos de inclinación: pitch (inclinación frontal) y roll (lateral). El yaw (rotación sobre el eje vertical) no puede determinarse con el acelerómetro solo.
+Cuando un móvil está quieto, el acelerómetro mide principalmente la aceleración debido a la gravedad. Esta tiene una magnitud de unos 9.81 m/s² y su dirección indica hacia dónde está el "suelo" en el sistema de coordenadas del dispositivo. A partir de ese vector, se puede estimar la actitud (orientación) en términos de inclinación: pitch (inclinación frontal) y roll (lateral). El yaw (rotación sobre el eje vertical) no puede determinarse con el acelerómetro.
 
 EL smartphone envía los datos del acelerómetro como un vector:
 
