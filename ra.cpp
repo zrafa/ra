@@ -5,7 +5,7 @@
  *
  * Dependencias: build_essential, opencv, opengl
  * Autor: chat.deepseek y gpt hicieron gran parte. Funciones específicas
- *        donde yo le indiqué la API y qué lograr.
+ *        donde le indiqué la API y qué lograr.
  *
  *        Rafael Zurita:
  *        La integración de todas las partes y versión con
@@ -157,35 +157,6 @@ void drawBackground() {
 
     glDisable(GL_TEXTURE_2D);
 }
-
-void drawCube(float size) {
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_DEPTH_TEST);
-
-    // Material rojo brillante
-    GLfloat mat_ambient[] = {0.7f, 0.0f, 0.0f, 1.0f};
-    GLfloat mat_diffuse[] = {1.0f, 0.0f, 0.0f, 1.0f};
-    GLfloat mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    GLfloat mat_shininess[] = {50.0f};
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-
-    glutSolidCube(size);
-
-    // Rejilla blanca
-    glDisable(GL_LIGHTING);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glutWireCube(size * 1.01f);
-}
-
-
-
-
-
 
 // --- PARTE 1 --- Angulos desde acelerómetro
 std::tuple<double, double, double> get_angles_from_accel(double gx, double gy, double gz) {
